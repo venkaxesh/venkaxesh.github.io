@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Venkatesh Workspace – Adsorption Isotherm Tool | M.Sc Chemistry Lab">
+  <title>Venkatesh Workspace – Adsorption Isotherm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #000;
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      cursor: none;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a, button {
+      cursor: none;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #000;
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .navbar-title {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .navbar-tag {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1100px;
+      margin: 10px auto 60px auto;
+      padding: 20px;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 6px;
+      text-align: center;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    input[type="number"] {
+      width: 90%;
+      padding: 3px;
+      box-sizing: border-box;
+      border: 1px solid #000;
+      background: #fff;
+      color: #000;
+      -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      border: 1px solid #000;
+      background: #000;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #222;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .note {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    #chartContainer {
+      margin-top: 25px;
+    }
+
+    .result-box {
+      border: 1px solid #000;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .inline-input {
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    /* NOTIFICATION BAR */
+    #notifyBar {
+      position: fixed;
+      top: 48px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-150%);
+      background: #f44336;
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 13px;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 200;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    #notifyBar.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 12px;
+      border-radius: 999px;
+      max-width: 700px;
+      margin: 0 auto 32px auto;
+    }
+
+    /* BASIC PAGE ANIMATION */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* PRINT STYLES */
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .navbar,
+      .footer,
+      #notifyBar,
+      .btn,
+      .note,
+      #chartContainer,
+      #trendInfo,
+      #backResult,
+      h2:nth-of-type(1), /* Extra: back calc section heading */
+      h2:nth-of-type(2)  /* Final result heading, we still keep box itself */
+      {
+        display: none !important;
+      }
+
+      .container {
+        margin: 0;
+        padding: 10px;
+      }
+
+      input[type="number"] {
+        border: none;
+      }
+    }
+
+    /* Glassmorphism + cursor + toast to match Heat of Solution design */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-scrolled {
+      width: 90% !important;
+    }
+
+    .hover-scale {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hover-scale:hover {
+      transform: scale(1.02) translateY(-5px);
+    }
+
+    .btn-hover {
+      transition: all 0.2s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(0.95);
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+      font-size: 14px;
+      z-index: 10000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    @media (min-width: 768px) {
+      .navbar-scrolled {
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="custom-cursor" class="fixed top-0 left-0 pointer-events-none z-[9999] w-[20px] h-[20px] hidden md:block"></div>
+
+<!-- LOGIN MODAL (same design as Heat of Solution) -->
+<div id="loginModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity p-4">
+  <div class="glass-card w-full max-w-md p-6 sm:p-8 rounded-[30px] shadow-2xl relative transform transition-all max-h-[95vh] overflow-y-auto">
+    <div class="text-center mb-6">
+      <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-3">
+        <span class="text-white font-mono text-lg">VK</span>
+      </div>
+      <h2 class="text-2xl font-bold font-mono tracking-tighter uppercase">Venkatesh Workspace</h2>
+      <p class="text-xs text-zinc-500 mt-1 font-mono">Adsorption Isotherm Tool</p>
+    </div>
+
+    <div class="flex gap-6 mb-6 border-b border-black/10 pb-4 justify-center">
+      <button id="tabLogin" onclick="switchTab('login')" class="font-bold text-xl hover:text-black/70 transition-colors">Login</button>
+      <button id="tabRegister" onclick="switchTab('register')" class="font-bold text-xl text-black/30 hover:text-black/70 transition-colors">Register</button>
+    </div>
+
+    <form id="authForm" class="space-y-4">
+      <div id="registerFields" class="hidden space-y-4">
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Full Name</label>
+          <input id="regName" type="text" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Institute</label>
+          <input id="regInst" type="text" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Email</label>
+        <input id="authEmail" type="email" placeholder="@gmail, @outlook, @edu.elcot.in" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+      </div>
+      
+      <div>
+        <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Password</label>
+        <input id="authPassword" type="password" placeholder="Min 8 chars: Upper, Lower, Number, Special" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+      </div>
+
+      <button type="submit" id="authSubmitBtn" class="w-full bg-black text-white px-8 py-3.5 rounded-full font-mono text-sm hover-scale btn-hover mt-6 shadow-lg">
+        Login →
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- NAVBAR (matches Heat of Solution layout) -->
+<nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[95vw] md:w-auto">
+  <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between gap-8 shadow-2xl border border-white/20">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+        <span class="text-white font-mono text-xs">VK</span>
+      </div>
+      <span class="font-mono text-sm hidden sm:block tracking-tighter uppercase">Venkatesh Workspace</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="../index.html#home" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors">Home</a>
+      <a href="../index.html#hire" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors">Labs</a>
+      <a href="../Project.html" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors">Research</a>
+    </div>
+    <button onclick="logout()" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-mono hover:bg-zinc-800 transition-all btn-hover">
+      Logout
+    </button>
+  </div>
+</nav>
+
+<!-- NOTIFICATION BAR -->
+<div id="notifyBar"></div>
+
+<main class="max-w-6xl mx-auto px-6 pt-32 pb-16">
+<div class="container glass-card rounded-[40px] p-8 sm:p-10">
+  <h1 class="text-2xl sm:text-3xl font-bold mb-6">Oxalic (or) Acetic Acid on Charcoal</h1>
+
+  <!-- MAIN TABLE -->
+  <div class="overflow-x-auto mb-6">
+    <table id="data-table" class="glass-card w-full rounded-2xl overflow-hidden shadow-2xl border border-black/10 min-w-[700px] text-xs sm:text-sm">
+      <thead class="bg-black/5">
+      <tr class="text-left uppercase text-xs tracking-wider text-zinc-600 font-mono">
+        <th class="p-4 font-bold">Bottle</th>
+        <th class="p-4 font-bold">V<sub>acid</sub> used to make 100 mL (mL)</th>
+        <th class="p-4 font-bold">V<sub>a</sub> (mL)<br>sample pipetted</th>
+        <th class="p-4 font-bold">V<sub>NaOH</sub> (mL)<br>(0.05 N)</th>
+        <th class="p-4 font-bold">Ce (N)</th>
+        <th class="p-4 font-bold">Ci (N)</th>
+        <th class="p-4 font-bold">x = (Ce−Ci)×63/10</th>
+        <th class="p-4 font-bold">x/m (m=2 g)</th>
+        <th class="p-4 font-bold">log Ce</th>
+        <th class="p-4 font-bold">log(x/m)</th>
+        <th class="p-4 font-bold">a = log K</th>
+        <th class="p-4 font-bold">b = slope (dy/dx)</th>
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-black/10">
+    <!-- Bottles 1–4: forward calculation -->
+    <tr class="hover:bg-black/5 transition-colors">
+      <td class="p-4 text-xs sm:text-sm">1</td>
+      <td class="p-4"><input type="number" step="0.01" value="50" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="10" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="ce p-4 text-xs sm:text-sm"></td>
+      <td class="ci p-4 text-xs sm:text-sm"></td>
+      <td class="x p-4 text-xs sm:text-sm"></td>
+      <td class="xm p-4 text-xs sm:text-sm"></td>
+      <td class="logce p-4 text-xs sm:text-sm"></td>
+      <td class="logxm p-4 text-xs sm:text-sm"></td>
+      <td class="aintercept p-4 text-xs sm:text-sm"></td>
+      <td class="bslope p-4 text-xs sm:text-sm"></td>
+    </tr>
+    <tr class="hover:bg-black/5 transition-colors">
+      <td class="p-4 text-xs sm:text-sm">2</td>
+      <td class="p-4"><input type="number" step="0.01" value="40" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="10" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="ce p-4 text-xs sm:text-sm"></td>
+      <td class="ci p-4 text-xs sm:text-sm"></td>
+      <td class="x p-4 text-xs sm:text-sm"></td>
+      <td class="xm p-4 text-xs sm:text-sm"></td>
+      <td class="logce p-4 text-xs sm:text-sm"></td>
+      <td class="logxm p-4 text-xs sm:text-sm"></td>
+      <td class="aintercept p-4 text-xs sm:text-sm"></td>
+      <td class="bslope p-4 text-xs sm:text-sm"></td>
+    </tr>
+    <tr class="hover:bg-black/5 transition-colors">
+      <td class="p-4 text-xs sm:text-sm">3</td>
+      <td class="p-4"><input type="number" step="0.01" value="30" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="20" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="ce p-4 text-xs sm:text-sm"></td>
+      <td class="ci p-4 text-xs sm:text-sm"></td>
+      <td class="x p-4 text-xs sm:text-sm"></td>
+      <td class="xm p-4 text-xs sm:text-sm"></td>
+      <td class="logce p-4 text-xs sm:text-sm"></td>
+      <td class="logxm p-4 text-xs sm:text-sm"></td>
+      <td class="aintercept p-4 text-xs sm:text-sm"></td>
+      <td class="bslope p-4 text-xs sm:text-sm"></td>
+    </tr>
+    <tr class="hover:bg-black/5 transition-colors">
+      <td class="p-4 text-xs sm:text-sm">4</td>
+      <td class="p-4"><input type="number" step="0.01" value="20" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="20" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="ce p-4 text-xs sm:text-sm"></td>
+      <td class="ci p-4 text-xs sm:text-sm"></td>
+      <td class="x p-4 text-xs sm:text-sm"></td>
+      <td class="xm p-4 text-xs sm:text-sm"></td>
+      <td class="logce p-4 text-xs sm:text-sm"></td>
+      <td class="logxm p-4 text-xs sm:text-sm"></td>
+      <td class="aintercept p-4 text-xs sm:text-sm"></td>
+      <td class="bslope p-4 text-xs sm:text-sm"></td>
+    </tr>
+
+    <!-- Bottles 5–6: manual log(x/m) input for back-calculation -->
+    <tr class="hover:bg-black/5 transition-colors">
+      <td class="p-4 text-xs sm:text-sm">5 (unknown)</td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="20" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="ce p-4 text-xs sm:text-sm"></td>
+      <td class="ci p-4 text-xs sm:text-sm"></td>
+      <td class="x p-4 text-xs sm:text-sm"></td>
+      <td class="xm p-4 text-xs sm:text-sm"></td>
+      <td class="logce p-4 text-xs sm:text-sm"></td>
+      <td class="logxm-manual p-4 text-xs sm:text-sm">
+        <input type="number" step="0.0001" class="logxm-input w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale">
+      </td>
+      <td class="aintercept p-4 text-xs sm:text-sm"></td>
+      <td class="bslope p-4 text-xs sm:text-sm"></td>
+    </tr>
+    <tr class="hover:bg-black/5 transition-colors">
+      <td class="p-4 text-xs sm:text-sm">6 (unknown)</td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="20" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="p-4"><input type="number" step="0.01" value="" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale"></td>
+      <td class="ce p-4 text-xs sm:text-sm"></td>
+      <td class="ci p-4 text-xs sm:text-sm"></td>
+      <td class="x p-4 text-xs sm:text-sm"></td>
+      <td class="xm p-4 text-xs sm:text-sm"></td>
+      <td class="logce p-4 text-xs sm:text-sm"></td>
+      <td class="logxm-manual p-4 text-xs sm:text-sm">
+        <input type="number" step="0.0001" class="logxm-input w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black hover-scale">
+      </td>
+      <td class="aintercept p-4 text-xs sm:text-sm"></td>
+      <td class="bslope p-4 text-xs sm:text-sm"></td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4 flex flex-wrap gap-3">
+    <button class="btn hover-scale btn-hover bg-black text-white px-8 py-3 rounded-full font-mono text-xs sm:text-sm" onclick="calculateAndPlot()">Calculate &amp; Plot →</button>
+    <button class="btn hover-scale btn-hover border border-black px-8 py-3 rounded-full font-mono text-xs sm:text-sm" onclick="printPage()">🖨️ Print Page</button>
+  </div>
+
+  <p class="note font-mono text-[11px] sm:text-xs mt-4 text-zinc-600">
+    • Bottles 1–4 → forward calculation + used for regression (Value K = log K, Value N = slope).<br>
+    • Bottles 5–6 → enter log(x/m) from your graph + Va, VNaOH → auto Ce, x, x/m, Ci.<br>
+    • Slope (Value N) = dy/dx = 1/n ⇒ n = 1/slope. Intercept = log K (Value K).
+  </p>
+
+  <div id="chartContainer" class="mt-6 glass-card rounded-2xl p-3 border border-black/10 shadow-2xl">
+    <canvas id="isoChart" class="w-full" height="250"></canvas>
+  </div>
+
+  <div id="trendInfo" class="note font-mono text-[11px] sm:text-xs mt-3 text-zinc-700"></div>
+
+  <!-- Optional: back calculation via trendline + log Ce -->
+  <h2 class="text-xl sm:text-2xl font-bold mt-8 mb-2">Extra: Back Calculation Using Trendline & log Ce</h2>
+  <p>
+    (Optional) If you know log Ce of an unknown, you can also use the trendline:<br>
+    log(x/m) = log K + (1/n)·log Ce.
+  </p>
+
+  <div class="mt-4 flex flex-wrap items-center gap-3">
+    <span class="inline-input font-mono text-xs sm:text-sm">
+      log Ce (X): <input type="number" id="logCeUnknown" step="0.0001" class="border border-black/30 rounded-lg px-2 py-1 bg-white/70">
+    </span>
+    <button class="btn hover-scale btn-hover bg-black text-white px-6 py-2 rounded-full font-mono text-xs sm:text-sm" onclick="backCalculateUnknown()">Back Calculate Unknown</button>
+  </div>
+
+  <div id="backResult" class="result-box glass-card rounded-2xl border border-black/10 mt-4 font-mono text-xs sm:text-sm"></div>
+
+  <!-- FINAL RESULT: K, n, Ci(5), Ci(6) + Download -->
+  <h2 class="text-xl sm:text-2xl font-bold mt-8 mb-2">Final Result (Value K, Value N, n, Ci for Bottle 5 & 6)</h2>
+  <div class="mt-3 flex flex-wrap gap-3">
+    <button class="btn hover-scale btn-hover bg-black text-white px-6 py-2 rounded-full font-mono text-xs sm:text-sm" onclick="showResult()">Show Result</button>
+    <button class="btn hover-scale btn-hover border border-black px-6 py-2 rounded-full font-mono text-xs sm:text-sm" onclick="downloadStatement()">Download Statement</button>
+  </div>
+
+  <div id="finalResult" class="result-box glass-card rounded-2xl border border-black/10 mt-4 font-mono text-xs sm:text-sm"></div>
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer glass-card">
+  <span class="font-mono text-xs sm:text-sm uppercase tracking-wider text-zinc-500">
+    Adsorption Isotherm Tool | Venkatesh Workspace | M.Sc Chemistry Lab
+  </span>
+</footer>
+
+<script>
+  // ==========================================
+  // 1. AUTHENTICATION & MODAL LOGIC (shared)
+  // ==========================================
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbzLVW9cJ5TD-Zdq2iE1DHFJpb1dGfawFE0MB93rx8CZOwLSYGSAt0YOC2pfqb-QT4Lz/exec";
+  let currentAuthMode = 'login'; // 'login' or 'register'
+
+  function showLogin() { 
+    document.getElementById('loginModal').classList.remove('hidden'); 
+    const mainEl = document.querySelector('main');
+    if (mainEl) mainEl.style.display = 'none';
+  }
+
+  function closeLogin() { 
+    document.getElementById('loginModal').classList.add('hidden'); 
+    const mainEl = document.querySelector('main');
+    if (mainEl) mainEl.style.display = 'block';
+  }
+
+  function logout() {
+    localStorage.removeItem('authToken');
+    showLogin();
+    showToast('Logged out successfully');
+  }
+
+  function switchTab(mode) {
+    currentAuthMode = mode;
+    const regFields = document.getElementById('registerFields');
+    const btn = document.getElementById('authSubmitBtn');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabReg = document.getElementById('tabRegister');
+
+    if (mode === 'register') {
+      regFields.classList.remove('hidden');
+      btn.innerHTML = 'Register →';
+      tabReg.classList.remove('text-black/30');
+      tabLogin.classList.add('text-black/30');
+    } else {
+      regFields.classList.add('hidden');
+      btn.innerHTML = 'Login →';
+      tabLogin.classList.remove('text-black/30');
+      tabReg.classList.add('text-black/30');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check auth token (keep user logged in for 24h)
+    const token = localStorage.getItem('authToken');
+    if (token && Date.now() - parseInt(token) < 24*60*60*1000) {
+      const mainEl = document.querySelector('main');
+      if (mainEl) mainEl.style.display = 'block';
+      return;
+    }
+    showLogin();
+  });
+
+  document.getElementById('authForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('authEmail').value;
+    const password = document.getElementById('authPassword').value;
+    const btn = document.getElementById('authSubmitBtn');
+
+    const emailRegex = /^[^\s@]+@(gmail\.com|outlook\.com|edu\.elcot\.in)$/i;
+    if (!emailRegex.test(email)) {
+      return showToast('Error: Use @gmail, @outlook, or @edu.elcot.in');
+    }
+
+    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passRegex.test(password)) {
+      return showToast('Password must be 8+ chars with Upper, Lower, Number & Special char.');
+    }
+
+    let payload = { action: currentAuthMode, email: email, password: password };
+    if (currentAuthMode === 'register') {
+      payload.name = document.getElementById('regName').value;
+      payload.institute = document.getElementById('regInst').value;
+      if (!payload.name || !payload.institute) return showToast('Please fill all fields');
+    }
+
+    btn.innerHTML = 'Processing...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch(GAS_URL, {
+        method: 'POST',
+        redirect: 'follow',
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload)
+      });
+      
+      const result = await response.json();
+
+      if (result.success) {
+        showToast(result.message);
+        if (currentAuthMode === 'login') {
+          localStorage.setItem('authToken', Date.now().toString());
+          closeLogin();
+        } else {
+          switchTab('login');
+        }
+      } else {
+        showToast('Error: ' + result.message);
+      }
+    } catch (error) {
+      console.error(error);
+      showToast('Network error connecting to database.');
+    } finally {
+      btn.innerHTML = currentAuthMode === 'login' ? 'Login →' : 'Register →';
+      btn.disabled = false;
+    }
+  });
+
+  // ==========================================
+  // 2. ADSORPTION CALCULATOR LOGIC (existing)
+  // ==========================================
+  const N_NaOH = 0.05;
+  const STOCK_ACID_N = 0.2;
+  const FACTOR = 63 / 10;
+  const MASS_M = 2;
+
+  let chartInstance = null;
+  let lastSlope = null;
+  let lastIntercept = null;
+  let notifyTimeout = null;
+
+  function notifyError(msg) {
+    const bar = document.getElementById("notifyBar");
+    bar.textContent = msg;
+    bar.classList.add("show");
+    if (notifyTimeout) clearTimeout(notifyTimeout);
+    notifyTimeout = setTimeout(() => {
+      bar.classList.remove("show");
+    }, 3500);
+  }
+
+  function calculateAndPlot() {
+    const tableBody = document
+      .getElementById("data-table")
+      .getElementsByTagName("tbody")[0];
+    const rows = tableBody.getElementsByTagName("tr");
+
+    const logCeArr = [];
+    const logXmArr = [];
+
+    let anyRowProcessed = false;
+
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName("td");
+
+      const VacidInput = cells[1].getElementsByTagName("input")[0];
+      const VaInput    = cells[2].getElementsByTagName("input")[0];
+      const VNaOHInput = cells[3].getElementsByTagName("input")[0];
+
+      const ceCell    = cells[4];
+      const ciCell    = cells[5];
+      const xCell     = cells[6];
+      const xmCell    = cells[7];
+      const logCeCell = cells[8];
+      const aCell     = cells[10];
+      const bCell     = cells[11];
+
+      ceCell.textContent    = "";
+      ciCell.textContent    = "";
+      xCell.textContent     = "";
+      xmCell.textContent    = "";
+      logCeCell.textContent = "";
+      aCell.textContent     = "";
+      bCell.textContent     = "";
+      if (i <= 3) {
+        const logXmCell = cells[9];
+        logXmCell.textContent = "";
+      }
+
+      const Vacid = parseFloat(VacidInput.value);
+      const Va    = parseFloat(VaInput.value);
+      const VNaOH = parseFloat(VNaOHInput.value);
+
+      if (isNaN(Va) || Va <= 0 || isNaN(VNaOH) || VNaOH <= 0) {
+        continue;
+      }
+
+      anyRowProcessed = true;
+
+      const Ce = (VNaOH * N_NaOH) / Va;
+      let Ci = NaN;
+      let x  = NaN;
+      let xm = NaN;
+      let logCe = NaN;
+      let logXm = NaN;
+
+      if (Ce > 0) {
+        logCe = Math.log10(Ce);
+      }
+
+      const bottleNumber = parseInt(cells[0].textContent);
+
+      if (bottleNumber <= 4) {
+        if (!isNaN(Vacid) && Vacid > 0) {
+          Ci = STOCK_ACID_N * (Vacid / 100.0);
+          x  = (Ce - Ci) * FACTOR;
+          xm = x / MASS_M;
+          const xmAbs = Math.abs(xm);
+          xm = xmAbs;
+          if (xmAbs > 0) {
+            logXm = Math.log10(xmAbs);
+          }
+        }
+        const logXmCell = cells[9];
+        logXmCell.textContent = isNaN(logXm) ? "" : logXm.toFixed(4);
+      } else {
+        const logXmInput = cells[9].querySelector("input.logxm-input");
+        if (logXmInput) {
+          const logXmManual = parseFloat(logXmInput.value);
+          if (!isNaN(logXmManual)) {
+            logXm = logXmManual;
+            xm = Math.pow(10, logXm);
+            x  = xm * MASS_M;
+            Ci = Ce - (x * 20 / 63);
+          }
+        }
+      }
+
+      ceCell.textContent    = Ce.toFixed(4);
+      logCeCell.textContent = isNaN(logCe) ? "" : logCe.toFixed(4);
+      ciCell.textContent    = isNaN(Ci)    ? "" : Ci.toFixed(4);
+      xCell.textContent     = isNaN(x)     ? "" : x.toFixed(4);
+      xmCell.textContent    = isNaN(xm)    ? "" : xm.toFixed(4);
+
+      if (bottleNumber <= 4 && !isNaN(logCe) && !isNaN(logXm)) {
+        logCeArr.push(logCe);
+        logXmArr.push(logXm);
+      }
+    }
+
+    if (!anyRowProcessed) {
+      notifyError("Please enter Va and VNaOH values for at least one bottle.");
+    }
+
+    computeRegressionAndDraw(logCeArr, logXmArr);
+
+    if (lastIntercept !== null && lastSlope !== null) {
+      for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        const aCell = cells[10];
+        const bCell = cells[11];
+        aCell.textContent = lastIntercept.toFixed(4);
+        bCell.textContent = lastSlope.toFixed(4);
+      }
+    }
+
+    document.getElementById("finalResult").textContent = "";
+  }
+
+  function computeRegressionAndDraw(xs, ys) {
+    const trendInfo = document.getElementById("trendInfo");
+
+    if (xs.length < 2) {
+      trendInfo.textContent = "Need at least 2 valid standard points (bottles 1–4) to compute trendline.";
+      lastSlope = null;
+      lastIntercept = null;
+      drawChart(xs, ys, null, null);
+      if (xs.length === 0) {
+        notifyError("No valid log Ce vs log(x/m) points for bottles 1–4.");
+      }
+      return;
+    }
+
+    const n = xs.length;
+    let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+    for (let i = 0; i < n; i++) {
+      sumX  += xs[i];
+      sumY  += ys[i];
+      sumXY += xs[i] * ys[i];
+      sumX2 += xs[i] * xs[i];
+    }
+
+    const denom = (n * sumX2 - sumX * sumX);
+    if (denom === 0) {
+      trendInfo.textContent = "Cannot compute trendline (denominator zero).";
+      lastSlope = null;
+      lastIntercept = null;
+      drawChart(xs, ys, null, null);
+      notifyError("Trendline calculation failed (denominator zero). Check your data.");
+      return;
+    }
+
+    const slope = (n * sumXY - sumX * sumY) / denom;
+    const intercept = (sumY - slope * sumX) / n;
+
+    lastSlope = slope;
+    lastIntercept = intercept;
+
+    trendInfo.textContent =
+      "Trendline (from standard bottles 1–4): log(x/m) = log K + (1/n)·log Ce\n" +
+      `Value K (log K) = ${intercept.toFixed(4)},  Value N (slope dy/dx) = ${slope.toFixed(4)}`;
+
+    drawChart(xs, ys, intercept, slope);
+  }
+
+  function drawChart(xs, ys, intercept, slope) {
+    const ctx = document.getElementById("isoChart").getContext("2d");
+
+    const dataPoints = xs.map((x, i) => ({ x: x, y: ys[i] }));
+
+    let trendPoints = [];
+    if (intercept !== null && slope !== null && xs.length > 0) {
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      trendPoints = [
+        { x: minX, y: intercept + slope * minX },
+        { x: maxX, y: intercept + slope * maxX }
+      ];
+    }
+
+    if (chartInstance) chartInstance.destroy();
+
+    const equationText = (intercept !== null && slope !== null)
+      ? `log(x/m) = ${intercept.toFixed(4)} + ${slope.toFixed(4)}·log Ce`
+      : 'log(x/m) vs log Ce';
+
+    chartInstance = new Chart(ctx, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Experimental Points (Bottles 1–4)',
+            data: dataPoints,
+            pointRadius: 4,
+            showLine: false,
+            fill: false
+          },
+          {
+            label: 'Trendline',
+            data: trendPoints,
+            pointRadius: 0,
+            showLine: true,
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+          title: {
+            display: true,
+            text: equationText
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const x = context.raw.x.toFixed(4);
+                const y = context.raw.y.toFixed(4);
+                return `log Ce: ${x}, log(x/m): ${y}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'linear',
+            title: { display: true, text: 'log Ce (X)' }
+          },
+          y: {
+            title: { display: true, text: 'log(x/m) (Y)' }
+          }
+        }
+      }
+    });
+  }
+
+  function backCalculateUnknown() {
+    const resultDiv = document.getElementById("backResult");
+    resultDiv.textContent = "";
+
+    if (lastSlope === null || lastIntercept === null) {
+      notifyError("Trendline not available. Please calculate with bottles 1–4 first.");
+      resultDiv.textContent = "Trendline not available. First enter data for bottles 1–4 and click 'Calculate & Plot'.";
+      return;
+    }
+
+    const logCeUnknownInput = document.getElementById("logCeUnknown");
+    const X = parseFloat(logCeUnknownInput.value);
+
+    if (isNaN(X)) {
+      notifyError("Enter a valid numeric value for log Ce.");
+      resultDiv.textContent = "Please enter a valid numeric value for log Ce.";
+      return;
+    }
+
+    const logK = lastIntercept;
+    const slope = lastSlope;
+    const Y = logK + slope * X;
+
+    const xm = Math.pow(10, Y);
+    const x  = xm * MASS_M;
+    const Ce = Math.pow(10, X);
+    const Ci = Ce - (x * 20 / 63);
+    const n  = (slope !== 0) ? 1 / slope : NaN;
+
+    resultDiv.textContent =
+      `Using trendline: log(x/m) = log K + (1/n)·log Ce\n` +
+      `Value K (log K) = ${logK.toFixed(4)}\n` +
+      `Value N (slope dy/dx) = ${slope.toFixed(4)}  →  n = 1/slope = ${isNaN(n) ? "undefined" : n.toFixed(6)}\n\n` +
+      `Input: log Ce (X) = ${X.toFixed(4)}\n` +
+      `log(x/m) (Y) = ${Y.toFixed(4)}\n` +
+      `x/m = 10^(Y) = ${xm.toFixed(6)}\n` +
+      `x = (x/m) × 2 = ${x.toFixed(6)}\n` +
+      `Ce = 10^(log Ce) = ${Ce.toFixed(6)}\n` +
+      `Ci = Ce − x×20/63 = ${Ci.toFixed(6)}\n`;
+  }
+
+  function showResult() {
+    const finalDiv = document.getElementById("finalResult");
+    finalDiv.textContent = "";
+
+    if (lastIntercept === null || lastSlope === null) {
+      notifyError("Please calculate bottles 1–4 first to get Value K and Value N.");
+      finalDiv.textContent = "Please calculate first (bottles 1–4) to get Value K and Value N.";
+      return;
+    }
+
+    const logK = lastIntercept;
+    const slope = lastSlope;
+    const n = (slope !== 0) ? 1 / slope : NaN;
+    const K = Math.pow(10, logK);
+
+    const tableBody = document
+      .getElementById("data-table")
+      .getElementsByTagName("tbody")[0];
+    const rows = tableBody.getElementsByTagName("tr");
+
+    const row5 = rows[4];
+    const row6 = rows[5];
+
+    const Ci5 = parseFloat(row5.getElementsByTagName("td")[5].textContent);
+    const Ci6 = parseFloat(row6.getElementsByTagName("td")[5].textContent);
+
+    const Ci5Text = isNaN(Ci5) ? "Not calculated" : Ci5.toFixed(6);
+    const Ci6Text = isNaN(Ci6) ? "Not calculated" : Ci6.toFixed(6);
+
+    finalDiv.textContent =
+      "Freundlich Constants:\n" +
+      `Value K (log K) = ${logK.toFixed(6)}\n` +
+      `Value N (slope dy/dx) = ${slope.toFixed(6)}\n` +
+      `n = 1/slope = ${isNaN(n) ? "undefined" : n.toFixed(6)}\n` +
+      `(optional) K = antilog(log K) = 10^(log K) = ${K.toFixed(6)}\n\n` +
+      "Initial concentration of unknown bottles (back calculation):\n" +
+      `Bottle 5: Ci(5) = ${Ci5Text} N\n` +
+      `Bottle 6: Ci(6) = ${Ci6Text} N\n`;
+  }
+
+  function downloadStatement() {
+    const tableBody = document
+      .getElementById("data-table")
+      .getElementsByTagName("tbody")[0];
+    const rows = tableBody.getElementsByTagName("tr");
+
+    if (lastIntercept === null || lastSlope === null) {
+      notifyError("Run 'Calculate & Plot' first to get Value K and Value N.");
+      return;
+    }
+
+    const logK = lastIntercept;
+    const slope = lastSlope;
+    const n = (slope !== 0) ? 1 / slope : NaN;
+    const K = Math.pow(10, logK);
+
+    const row5 = rows[4];
+    const row6 = rows[5];
+
+    const Ci5 = parseFloat(row5.getElementsByTagName("td")[5].textContent);
+    const Ci6 = parseFloat(row6.getElementsByTagName("td")[5].textContent);
+
+    const Ci5Text = isNaN(Ci5) ? "Not calculated" : Ci5.toFixed(6);
+    const Ci6Text = isNaN(Ci6) ? "Not calculated" : Ci6.toFixed(6);
+
+    let txt =
+      "Venkatesh Workspace – Adsorption Isotherm (Acetic Acid on Charcoal)\n\n" +
+      "Freundlich Isotherm: log(x/m) = log K + (1/n)·log Ce\n\n" +
+      `Value K (log K) = ${logK.toFixed(6)}\n` +
+      `Value N (slope dy/dx) = ${slope.toFixed(6)}\n` +
+      `n = 1/slope = ${isNaN(n) ? "undefined" : n.toFixed(6)}\n` +
+      `K (antilog of log K) = 10^(log K) = ${K.toFixed(6)}\n\n` +
+      "Unknown Samples (from back calculation, Ci = Ce − x·20/63):\n" +
+      `Bottle 5: Ci(5) = ${Ci5Text} N\n` +
+      `Bottle 6: Ci(6) = ${Ci6Text} N\n`;
+
+    const blob = new Blob([txt], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const aTag = document.createElement("a");
+    aTag.href = url;
+    aTag.download = "Venkatesh_Workspace_Adsorption_Result.txt";
+    document.body.appendChild(aTag);
+    aTag.click();
+    document.body.removeChild(aTag);
+    URL.revokeObjectURL(url);
+  }
+
+  function printPage() {
+    window.print();
+  }
+
+  // ==========================================
+  // 3. UI & UX FEATURES (cursor, navbar, toast, protections)
+  // ==========================================
+  const cursor = document.getElementById('custom-cursor');
+  let isPointer = false;
+
+  document.addEventListener('mousemove', (e) => {
+    if (!cursor) return;
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    const target = e.target;
+    const computedStyle = window.getComputedStyle(target);
+    isPointer = computedStyle.cursor === 'pointer' || target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('button') || target.closest('a');
+    
+    cursor.innerHTML = isPointer ?
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10 2L3 19L10 16L17 19L10 2Z" fill="#EF4444" stroke="white" stroke-width="1.5" transform="rotate(-15 10 10)"/></svg>' :
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5.5 3.21V20.8L10.07 15.65H18.5L5.5 3.21Z" fill="#EF4444" stroke="white" stroke-width="1.5"/></svg>';
+    cursor.style.width = isPointer ? '24px' : '20px';
+    cursor.style.height = isPointer ? '24px' : '20px';
+  });
+
+  const navbarEl = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (!navbarEl) return;
+    navbarEl.classList.toggle('navbar-scrolled', window.scrollY > 20);
+  });
+
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 100);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J'))) {
+      e.preventDefault();
+      showToast('DevTools disabled');
+      location.reload();
+    }
+    if (e.ctrlKey && (e.key === 'u' || e.key === 's')) {
+      e.preventDefault();
+      showToast('Protected');
+    }
+    if (e.key === 'PrintScreen') {
+      e.preventDefault();
+      showToast('Screenshots are restricted');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText('Screenshots are restricted on this page.').catch(() => {});
+      }
+    }
+  }, true);
+</script>
+</body>
+</html>
