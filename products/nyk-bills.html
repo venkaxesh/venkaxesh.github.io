@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store | Venkatesh Workspace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --dot-color: #d1d1d1;
+      --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #000;
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .hover-scale {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hover-scale:hover {
+      transform: scale(1.02) translateY(-2px);
+    }
+    .btn-hover {
+      transition: all 0.2s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body class="pt-24 px-6 max-w-7xl mx-auto pb-12">
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[95vw] md:w-auto">
+    <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between gap-8 shadow-2xl border border-white/20">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+          <span class="text-white font-mono text-xs">VK</span>
+        </div>
+        <span class="font-mono text-sm hidden sm:block tracking-tighter uppercase">Venkatesh Workspace</span>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html#home" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Home</a>
+        <a href="index.html#connect" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Connect</a>
+        <a href="index.html#hire" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Project</a>
+      </div>
+
+      <a href="Labs.html" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-mono hover:bg-zinc-800 transition-all btn-hover">
+        Labs
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="text-center py-24 space-y-6">
+      <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-black to-zinc-800 bg-clip-text text-transparent tracking-tight">
+        STORE
+      </h1>
+      <p class="text-xl md:text-2xl text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+        Desktop apps and tools crafted for real-world workflows – starting with offline billing for Windows.
+      </p>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-24">
+      <!-- Nyk Bills card -->
+      <article class="glass-card p-8 rounded-[40px] hover-scale group">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-10 h-10 rounded-2xl bg-black flex items-center justify-center shadow-lg">
+            <span class="text-white font-mono text-xs">NB</span>
+          </div>
+          <div class="text-left">
+            <h2 class="text-2xl font-bold group-hover:text-red-500 transition-colors font-mono uppercase tracking-wider">
+              Nyk Bills
+            </h2>
+            <p class="font-mono text-[11px] uppercase tracking-wider text-zinc-500">
+              Offline Billing Software • v1.2.0
+            </p>
+          </div>
+        </div>
+        <p class="text-zinc-600 mb-4 text-sm leading-relaxed">
+          Windows‑only offline accounting and billing software for GST / Non‑GST invoices, inventory tracking, and client management. Built with React + Vite.
+        </p>
+        <ul class="text-xs text-zinc-500 font-mono space-y-1 mb-6">
+          <li>• OS: Windows 10 / 11 (64‑bit)</li>
+          <li>• Mode: Offline (no database server needed)</li>
+          <li>• Features: GST &amp; Non‑GST invoicing, inventory, clients, purchase entry, invoice printing</li>
+        </ul>
+        <div class="flex flex-wrap gap-3">
+          <a href="products/nyk-bills.html" class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-sm font-mono hover:bg-zinc-800 btn-hover transition-all">
+            View Details & Download →
+          </a>
+        </div>
+      </article>
+
+      <!-- Placeholder for future products -->
+      <article class="glass-card p-8 rounded-[40px] hover-scale">
+        <h2 class="text-2xl font-bold mb-2 font-mono uppercase tracking-wider text-zinc-400">Coming Soon</h2>
+        <p class="text-zinc-500 mb-4 text-sm leading-relaxed">
+          More desktop tools and productivity apps for Windows are under development.
+        </p>
+        <p class="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+          WIP • React / Electron • Windows x64
+        </p>
+      </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-black/5 text-center">
+      <p class="font-mono text-xs uppercase tracking-wider text-zinc-400">
+        Store by Venkatesh Workspace | © 2026 | Desktop Apps for Windows
+      </p>
+    </footer>
+  </main>
+</body>
+</html>
+
