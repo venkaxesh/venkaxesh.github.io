@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Portfolio of Venkatesh Kumar (venkaxesh), an M.Sc Chemistry student specializing in Analytical Analysis, UV-Vis Spectroscopy, and Microscopy. Exploring molecular dynamics and chemical research in Tamil Nadu, India." />
+  <meta name="keywords" content="Venkatesh Kumar, venkaxesh, M.Sc Chemistry, Analytical Analysis, UV-Vis Spectroscopy, Microscopy, Chemical Research, Tamil Nadu, Chemistry Portfolio" />
+  
+  <!-- OG/Twitter metas -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ais-dev-vgiriuabpf6jhdgiqplbhb-264640036918.asia-southeast1.run.app" />
+  <meta property="og:title" content="venkaxesh | Venkatesh Kumar" />
+  <meta property="og:description" content="M.Sc Chemistry student specializing in Analytical Analysis and Molecular Dynamics." />
+  <meta property="og:image" content="https://picsum.photos/seed/venkaxesh-chem/1200/630" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ais-dev-vgiriuabpf6jhdgiqplbhb-264640036918.asia-southeast1.run.app" />
+  <meta property="twitter:title" content="venkaxesh | Venkatesh Kumar" />
+  <meta property="twitter:description" content="M.Sc Chemistry student specializing in Analytical Analysis and Molecular Dynamics." />
+  <meta property="twitter:image" content="https://picsum.photos/seed/venkaxesh-chem/1200/630" />
+  
+  <title>venkaxesh</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --dot-color: #d1d1d1;
+      --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #000;
+      font-family: var(--font-sans);
+      cursor: none;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a, button {
+      cursor: none;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .dot-matrix {
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 10px;
+    }
+
+    /* Fade/scale keyframes */
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(1.1); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeOutScale {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.95); }
+    }
+
+    .fade-in-scale {
+      animation: fadeInScale 1s ease-in-out;
+    }
+
+    /* Toast notifications */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      z-index: 10000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.hide {
+      transform: translateX(400px);
+    }
+
+    /* Photo slider */
+    .slider-img {
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+      opacity: 0;
+      z-index: 1;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .slider-img.active {
+      opacity: 1;
+      z-index: 2;
+      transform: scale(1);
+    }
+
+    /* Hover effects */
+    .hover-scale {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hover-scale:hover {
+      transform: scale(1.02) translateY(-5px);
+    }
+    .btn-hover {
+      transition: all 0.2s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(0.95);
+    }
+
+    /* Navbar scroll */
+    .navbar-scrolled {
+      width: 90% !important;
+    }
+
+    /* Security Protections */
+    img, video, .slider-img {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .navbar-scrolled {
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" class="fixed top-0 left-0 pointer-events-none z-[9999] w-[20px] h-[20px]"></div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[95vw] md:w-auto">
+    <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between gap-8 shadow-2xl border border-white/20">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+          <span class="text-white font-mono text-xs">VK</span>
+        </div>
+        <span class="font-mono text-sm hidden sm:block tracking-tighter uppercase">Venkatesh.Kumar</span>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#home" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Home</a>
+        <a href="#connect" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Connect</a>
+        <a href="#hire" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Project</a>
+      </div>
+
+      <a href="Assets/resume.pdf" download="Venkatesh_Kumar_Resume.pdf" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-mono hover:bg-zinc-800 transition-all btn-hover">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> RESUME
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-6 pt-32 pb-12">
+    <!-- Home Section -->
+    <section id="home" class="space-y-6">
+      <!-- Photo Slider -->
+      <div class="relative w-full h-[500px] md:h-[600px] rounded-[40px] overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <div id="slider-container" class="relative w-full h-full">
+          <!-- Images will be inserted by JS -->
+        </div>
+        <!-- Dots -->
+        <div id="slider-dots" class="absolute bottom-12 right-4 flex gap-2 bg-black/50 backdrop-blur-sm rounded-full p-2 z-[20]"></div>
+
+        <!-- Hero Text -->
+        <div class="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row md:items-end justify-between gap-6 z-[10]">
+
+          <div class="p-6 max-w-xl bg-transparent text-shadow">
+
+
+            <div class="inline-block px-3 py-1 bg-red-500 text-white text-[10px] font-mono rounded-full mb-4 fade-in-scale">
+              M.SC CHEMISTRY STUDENT
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-[0.9] fade-in-scale drop-shadow-2xl">
+              Innovate. <br>Elevate. <br>
+              <span class="text-zinc-400 italic">Dominate.</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- Career & Skills Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Career Objective -->
+        <div class="glass-card p-8 rounded-[40px] md:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17,11 19,13 23,9"></polyline></svg>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Career Objective</span>
+          </div>
+          <p class="text-xl md:text-2xl font-semibold leading-tight mb-6">
+            Motivated and dedicated  <span class="text-red-500">M.Sc Chemistry student</span> seeking an entry-level opportunity to apply academic knowl- edge, analytical abilities, and problem-solving skills in a professional organization while contributing effectively to team growth and organizational success. seeking an entry-level opportunity to apply academic knowledge.
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-black/5">
+            <div><p class="text-[10px] font-mono text-zinc-400 uppercase mb-1">Location</p><p class="text-sm font-semibold">Madurai, TN</p></div>
+            <div><p class="text-[10px] font-mono text-zinc-400 uppercase mb-1">Education</p><p class="text-sm font-semibold">M.Sc Chemistry</p></div>
+            <div><p class="text-[10px] font-mono text-zinc-400 uppercase mb-1">Languages</p><p class="text-sm font-semibold">Tamil, English</p></div>
+            <div></div>
+          </div>
+        </div>
+        
+        <!-- Skills -->
+        <div class="glass-card p-8 rounded-[40px] flex flex-col justify-between">
+          <div class="flex items-center gap-2 mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 3v3m0 12v3m9-9h-3M5 12H2m13.5-7.5l-2.5 2.5M6.5 6.5L9 9m3 6l2.5 2.5M6.5 17.5L9 15"></path></svg>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Technical Skills</span>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between group cursor-default hover-scale"><span class="font-mono text-xs uppercase tracking-wider">Wet Chemical Analysis</span><div class="w-1.5 h-1.5 bg-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+            <div class="flex items-center justify-between group cursor-default hover-scale"><span class="font-mono text-xs uppercase tracking-wider">UV-Vis Spectroscopy Handling</span><div class="w-1.5 h-1.5 bg-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+            <div class="flex items-center justify-between group cursor-default hover-scale"><span class="font-mono text-xs uppercase tracking-wider">Titration Techniques</span><div class="w-1.5 h-1.5 bg-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+            <div class="flex items-center justify-between group cursor-default hover-scale"><span class="font-mono text-xs uppercase tracking-wider">Prepation of Solutions</span><div class="w-1.5 h-1.5 bg-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+            <div class="flex items-center justify-between group cursor-default hover-scale"><span class="font-mono text-xs uppercase tracking-wider">Laboratory Apparatus & Instruments Handling</span><div class="w-1.5 h-1.5 bg-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+            <div class="flex items-center justify-between group cursor-default hover-scale"><span class="font-mono text-xs uppercase tracking-wider">ChemOffice,MS Office,LaTeX</span><div class="w-1.5 h-1.5 bg-black rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section class="py-24 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="glass-card p-8 rounded-[40px]">
+        <div class="flex items-center gap-2 mb-6">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M21 15V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"></path><line x1="7" y1="10" x2="7" y2="15"></line><line x1="11" y1="10" x2="11" y2="15"></line><line x1="15" y1="10" x2="15" y2="15"></line><line x1="21" y1="12" x2="7" y2="12"></line></svg>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Education</span>
+        </div>
+        <div class="space-y-8">
+          <div class="pl-6 border-l border-black/5 relative">
+            <div class="absolute left-[-4.5px] top-1 w-2 h-2 bg-red-500 rounded-full"></div>
+            <p class="text-[10px] font-mono text-zinc-400 mb-1">2024 – 2026</p>
+            <h4 class="font-bold text-lg leading-tight">M.Sc Chemistry</h4>
+            <p class="text-sm text-zinc-500 mb-2">Saraswathi Narayanan College, Madurai</p>
+            <p class="text-xs text-zinc-400">Currently pursuing with CGPA 7.1</p>
+          </div>
+          <div class="pl-6 border-l border-black/5 relative">
+            <div class="absolute left-[-4.5px] top-1 w-2 h-2 bg-red-500 rounded-full"></div>
+            <p class="text-[10px] font-mono text-zinc-400 mb-1">2025</p>
+            <h4 class="font-bold text-lg leading-tight">Diploma in Computer Application</h4>
+            <p class="text-sm text-zinc-500 mb-2">STP Computer Education(Online Course)</p>
+          </div>
+          <div class="pl-6 border-l border-black/5 relative">
+            <div class="absolute left-[-4.5px] top-1 w-2 h-2 bg-red-500 rounded-full"></div>
+            <p class="text-[10px] font-mono text-zinc-400 mb-1">2021 – 2024</p>
+            <h4 class="font-bold text-lg leading-tight">B.Sc Chemistry</h4>
+            <p class="text-sm text-zinc-500 mb-2">Sourashtra College, Madurai</p>
+            <p class="text-xs text-zinc-400">CGPA 6.6</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card p-8 rounded-[40px]">
+        <div class="flex items-center gap-2 mb-6">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 3v3m0 12v3m9-9h-3M5 12H2m13.5-7.5l-2.5 2.5M6.5 6.5L9 9m3 6l2.5 2.5M6.5 17.5L9 15"></path></svg>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Certifications</span>
+        </div>
+        <div class="space-y-4 mb-12">
+          <div class="p-4 bg-black/5 rounded-2xl flex items-center justify-between hover:bg-black hover:text-white transition-all cursor-pointer hover-scale">
+            <span class="text-xs font-mono uppercase tracking-wider">Medical Billing and Coding – Coursera</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="14"></line><line x1="10" y1="19" x2="21" y2="19"></line></svg>
+          </div>
+          <div class="p-4 bg-black/5 rounded-2xl flex items-center justify-between hover:bg-black hover:text-white transition-all cursor-pointer hover-scale">
+            <span class="text-xs font-mono uppercase tracking-wider">UV-Visible Spectroscopy Conference (2025)</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="14"></line><line x1="10" y1="19" x2="21" y2="19"></line></svg>
+          </div>
+        </div>
+        <!-- Languages -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 0 1 6.412 9m6.088 9.5A18.022 18.022 0 0 1 17.588 9m0 0h6m-6 .5-1.034 1.034M12 19v-6M18 3v2M6 3v2"></path></svg>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-zinc-400">Languages</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-black text-white text-[10px] font-mono rounded-full">English</span>
+            <span class="px-3 py-1 bg-black text-white text-[10px] font-mono rounded-full">Tamil</span>
+            <span class="px-3 py-1 bg-black text-white text-[10px] font-mono rounded-full">Sourashtra</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect Section -->
+    <section id="connect" class="py-24 space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="font-mono text-xs uppercase tracking-[0.3em] text-zinc-400">Social Connect</h3>
+        <div class="h-px flex-1 bg-black/5 mx-6"></div>
+      </div>
+      <div id="social-links" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+    </section>
+
+    <!-- Hire Section -->
+    <section id="hire" class="py-24">
+      <div class="glass-card rounded-[40px] p-8 md:p-16 relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-8 opacity-10">
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"></path><line x1="7" y1="10" x2="7" y2="15"></line><line x1="11" y1="10" x2="11" y2="15"></line><line x1="15" y1="10" x2="15" y2="15"></line><line x1="21" y1="12" x2="7" y2="12"></line></svg>
+        </div>
+        <div class="max-w-2xl relative z-10">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+            ACADEMIC PROJECT: <br>
+            <span class="text-zinc-400 italic">SILVER NANOPARTICLES.</span>
+          </h2>
+          <p class="text-zinc-600 mb-10 text-lg leading-relaxed">
+            My research focuses on the "Green Synthesis of Silver Nanoparticles (AgNPs) for Biological Applications," involving eco-friendly synthesis using plant extracts and characterization via UV-Visible spectroscopy.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button id="discuss-btn" class="bg-black text-white px-8 py-4 rounded-full font-mono text-sm flex items-center justify-center gap-2 hover:bg-zinc-800 transition-all btn-hover">
+              DISCUSS RESEARCH →
+            </button>
+            <a href="Project.html" class="border border-black/10 px-8 py-4 rounded-full font-mono text-sm flex items-center justify-center gap-2 hover:bg-red-500 hover:text-white transition-all btn-hover">
+              VIEW PROJECT →
+            </a>
+            <a href="Assets/resume.pdf" download class="border border-black/10 px-8 py-4 rounded-full font-mono text-sm flex items-center justify-center gap-2 hover:bg-black/5 transition-all">
+              DOWNLOAD CV
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-black/5">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+            <span class="text-white font-mono text-sm">VK</span>
+          </div>
+          <div>
+            <p class="font-mono text-xs font-bold uppercase tracking-widest">Venkatesh Kumar M K</p>
+            <p class="text-[10px] text-zinc-400 font-mono">© 2026 | MADURAI, TAMIL NADU</p>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row gap-6 text-[10px] font-mono text-zinc-400">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            RESEARCHER ACTIVE
+          </div>
+          <div class="flex gap-4 opacity-50">
+            <span>M.SC CHEMISTRY</span>
+            <span>UV-VIS: CALIBRATED</span>
+            <span>LATEX: READY</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Background Blurs -->
+  <div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-red-500/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-zinc-500/5 blur-[120px] rounded-full"></div>
+  </div>
+
+  <script>
+    // Image sources
+    const images = [
+      'Assets/img/img1.jpeg',
+      'Assets/img/img2.jpeg',
+      'Assets/img/img3.jpeg',
+      'Assets/img/img4.jpeg',
+      'Assets/img/img5.jpeg'
+    ];
+
+    // === Custom Cursor ===
+    const cursor = document.getElementById('custom-cursor');
+    let isPointer = false;
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+
+      const target = e.target;
+      const computedStyle = window.getComputedStyle(target);
+      isPointer = computedStyle.cursor === 'pointer' || target.tagName === 'A' || target.tagName === 'BUTTON';
+      updateCursor();
+    });
+
+    function updateCursor() {
+      if (isPointer) {
+        cursor.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10 2L3 19L10 16L17 19L10 2Z" fill="#EF4444" stroke="white" stroke-width="1.5" transform="rotate(-15 10 10)"/></svg>';
+        cursor.style.width = '24px';
+        cursor.style.height = '24px';
+      } else {
+        cursor.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5.5 3.21V20.8L10.07 15.65H18.5L5.5 3.21Z" fill="#EF4444" stroke="white" stroke-width="1.5"/></svg>';
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+      }
+    }
+
+    // === Navbar Scroll ===
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+    });
+
+    // === Smooth Scroll for Nav Links ===
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // === Photo Slider ===
+    const sliderContainer = document.getElementById('slider-container');
+    const dotsContainer = document.getElementById('slider-dots');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function initSlider() {
+      // Add images
+      images.forEach((src, index) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'slider-img absolute inset-0 w-full h-full object-cover';
+        img.alt = `Slide ${index + 1}`;
+        img.onerror = () => {
+          img.src = `https://picsum.photos/seed/chem${index}/1200/800`;
+        };
+        if (index === 0) img.classList.add('active');
+        sliderContainer.appendChild(img);
+      });
+
+      // Add dots
+      images.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = `h-1 transition-all duration-300 rounded-full ${index === 0 ? 'w-8 bg-white' : 'w-4 bg-white/30'}`;
+        dot.onclick = () => goToSlide(index);
+        dotsContainer.appendChild(dot);
+      });
+
+      // Auto slide
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    function goToSlide(n) {
+      const imgs = sliderContainer.querySelectorAll('.slider-img');
+      const dots = dotsContainer.querySelectorAll('button');
+      
+      imgs[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('w-8', 'bg-white');
+      dots[currentSlide].classList.add('w-4', 'bg-white/30');
+      
+      currentSlide = (n + images.length) % images.length;
+      
+      imgs[currentSlide].classList.add('active');
+      dots[currentSlide].classList.remove('w-4', 'bg-white/30');
+      dots[currentSlide].classList.add('w-8', 'bg-white');
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    // === Social Links ===
+    function initSocials() {
+      const socials = [
+        { name: 'Github', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12.017 0 5.299 3.437 9.77 8.205 11.354.6.111.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12.297c0-6.63-5.37-12.017-12-12.017z"/></svg>', href: 'https://github.com/venkaxesh' },
+        { name: 'LinkedIn', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>', href: 'https://linkedin.com/in/venkaxesh' },
+        { name: 'Email', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', href: 'mailto:venkaxesh@gmail.com' },
+        { name: 'Phone', icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>', href: 'tel:+917200331516' }
+      ];
+      const container = document.getElementById('social-links');
+      socials.forEach(social => {
+        const a = document.createElement('a');
+        a.href = social.href;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'bg-black p-6 rounded-3xl flex flex-col items-center justify-center gap-4 transition-all group text-white hover:bg-red-600 hover-scale btn-hover active:scale-95';
+        a.innerHTML = `<span class="text-2xl">${social.icon}</span><span class="font-mono text-[10px] uppercase tracking-widest">${social.name}</span>`;
+        container.appendChild(a);
+      });
+    }
+
+    // === Discuss Button ===
+    document.getElementById('discuss-btn').addEventListener('click', () => {
+      window.location.href = 'mailto:venkaxesh@gmail.com?subject=Research Collaboration';
+    });
+
+    // Init on load
+    // Toast notification function
+    function showToast(message, duration = 3000) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      // Show
+      setTimeout(() => toast.classList.add('show'), 100);
+
+      // Hide and remove
+      setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
+    }
+
+    // External links and downloads - 5s warning + reveal
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('a');
+      if (target && target.target === '_blank') {
+        e.preventDefault();
+        e.stopPropagation();
+        showToast(`Click again to open secure ${target.querySelector('span:last-child')?.textContent || 'link'}`, 3000);
+        target.style.filter = 'brightness(0.5)';
+        target.onclick = (e2) => {
+          e2.preventDefault();
+          showToast(`Opening secure ${target.querySelector('span:last-child')?.textContent || 'link'} in new tab...`, 2000);
+          setTimeout(() => {
+            target.style.filter = '';
+            window.open(target.href, '_blank');
+          }, 2000);
+        };
+      } else if (target && (target.href?.includes('resume.pdf') || target.href?.includes('Assets/resume.pdf'))) {
+        showToast('Preparing resume download...');
+        setTimeout(() => showToast('Downloading resume...', 2000), 1000);
+      }
+    });
+
+    // Security JS Protections
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      // Block devtools keys
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J'))) {
+        e.preventDefault();
+        showToast('DevTools disabled');
+        return false;
+      }
+      // Block view source/save
+      if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) {
+        e.preventDefault();
+        showToast('Content protected');
+        return false;
+      }
+      // Block PrtScn
+      if (e.key === 'PrintScreen') {
+        showToast('Screenshots disabled');
+        navigator.clipboard.writeText('').catch(() => {});
+        return false;
+      }
+      // Block text select
+      if (e.ctrlKey && e.key === 'a') {
+        e.preventDefault();
+        showToast('Select disabled');
+      }
+    }, true);
+
+    // Disable devtools detection (basic)
+    let devtoolsOpen = false;
+    const threshold = 160;
+    setInterval(() => {
+      if ((window.outerHeight - window.innerHeight > threshold) || (window.outerWidth - window.innerWidth > threshold)) {
+        if (!devtoolsOpen) {
+          devtoolsOpen = true;
+          showToast('DevTools detected - page will reload');
+          setTimeout(() => window.location.reload(), 2000);
+        }
+      }
+    }, 500);
+
+    window.addEventListener('load', () => {
+      initSlider();
+      initSocials();
+      updateCursor(); // Initial cursor
+    });
+  </script>
+</body>
+</html>
+
