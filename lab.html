@@ -1,538 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#000000">
-<meta name="description" content="Venkatesh Workspace – Heat of Solution Calculator | M.Sc Chemistry Lab Tool">
-<title>Venkatesh Workspace – Heat of Solution</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-:root {
-  --bg-color: #f5f5f5;
-  --dot-color: #d1d1d1;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0; padding: 0;
-  background-color: var(--bg-color);
-  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: #000;
-  font-family: var(--font-sans);
-  cursor: none;
-  line-height: 1.6;
-  min-height: 100vh;
-}
-
-a, button { cursor: none; }
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.navbar-scrolled { width: 90% !important; }
-
-.hover-scale { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-.hover-scale:hover { transform: scale(1.02) translateY(-5px); }
-
-.btn-hover { transition: all 0.2s ease; }
-.btn-hover:hover { transform: scale(0.95); }
-
-.step { display: none; }
-.step.active { display: block; }
-
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #000; border-radius: 10px; }
-
-/* Toast */
-.toast {
-  position: fixed; top: 20px; right: 20px;
-  background: rgba(0,0,0,0.9); color: white;
-  padding: 12px 20px; border-radius: 8px;
-  font-family: var(--font-mono); font-size: 14px;
-  z-index: 10000; transform: translateX(400px);
-  transition: transform 0.3s ease; backdrop-filter: blur(10px);
-}
-.toast.show { transform: translateX(0); }
-
-/* Print */
-@media print { nav, button, .settings { display: none !important; } }
-@media (min-width: 768px) { .navbar-scrolled { width: auto !important; } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Labs | venkaxesh</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --dot-color: #d1d1d1;
+      --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #000;
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .hover-scale {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hover-scale:hover {
+      transform: scale(1.02) translateY(-2px);
+    }
+    .btn-hover {
+      transition: all 0.2s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
-
-<body>
-<div id="custom-cursor" class="fixed top-0 left-0 pointer-events-none z-[9999] w-[20px] h-[20px] hidden md:block"></div>
-
-<div id="loginModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity p-4">
-  
-  <div class="glass-card w-full max-w-md p-6 sm:p-8 rounded-[30px] shadow-2xl relative transform transition-all max-h-[95vh] overflow-y-auto">
-    
-    <div class="text-center mb-6">
-      <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-3">
-        <span class="text-white font-mono text-lg">VK</span>
-      </div>
-      <h2 class="text-2xl font-bold font-mono tracking-tighter uppercase">Venkatesh Workspace</h2>
-      <p class="text-xs text-zinc-500 mt-1 font-mono">Heat of Solution Calculator</p>
-    </div>
-
-    <div class="flex gap-6 mb-6 border-b border-black/10 pb-4 justify-center">
-      <button id="tabLogin" onclick="switchTab('login')" class="font-bold text-xl hover:text-black/70 transition-colors">Login</button>
-      <button id="tabRegister" onclick="switchTab('register')" class="font-bold text-xl text-black/30 hover:text-black/70 transition-colors">Register</button>
-    </div>
-
-    <form id="authForm" class="space-y-4">
-      <div id="registerFields" class="hidden space-y-4">
-        <div>
-          <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Full Name</label>
-          <input id="regName" type="text" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+<body class="pt-24 px-6 max-w-7xl mx-auto pb-12">
+ <!-- Navbar -->
+  <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[95vw] md:w-auto">
+    <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between gap-8 shadow-2xl border border-white/20">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+          <span class="text-white font-mono text-xs">VK</span>
         </div>
-        <div>
-          <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Institute</label>
-          <input id="regInst" type="text" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Email</label>
-        <input id="authEmail" type="email" placeholder="@gmail, @outlook, @edu.elcot.in" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+        <span class="font-mono text-sm hidden sm:block tracking-tighter uppercase">Venkatesh.Kumar</span>
       </div>
       
-      <div>
-        <label class="block text-xs font-mono uppercase tracking-wider text-zinc-500 mb-1">Password</label>
-        <input id="authPassword" type="password" placeholder="Min 8 chars: Upper, Lower, Number, Special" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black transition-colors">
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html#home" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Home</a>
+        <a href="index.html#connect" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Connect</a>
+        <a href="index.html#hire" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Project</a>
       </div>
 
-      <button type="submit" id="authSubmitBtn" class="w-full bg-black text-white px-8 py-3.5 rounded-full font-mono text-sm hover-scale btn-hover mt-6 shadow-lg">
-        Login →
-      </button>
-    </form>
-  </div>
-</div>
-
-<nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[95vw] md:w-auto">
-  <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between gap-8 shadow-2xl border border-white/20">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-        <span class="text-white font-mono text-xs">VK</span>
-      </div>
-      <span class="font-mono text-sm hidden sm:block tracking-tighter uppercase">Venkatesh Workspace</span>
+      <a href="Assets/resume.pdf" download="Venkatesh_Kumar_Resume.pdf" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-mono hover:bg-zinc-800 transition-all btn-hover">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> RESUME
+      </a>
     </div>
-    <div class="hidden md:flex items-center gap-6">
-      <a href="../index.html#home" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors">Home</a>
-      <a href="../index.html#hire" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors">Labs</a>
-      <a href="../Project.html" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors">Research</a>
-    </div>
-    <button onclick="logout()" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-mono hover:bg-zinc-800 transition-all btn-hover">
-      Logout
-    </button>
-  </div>
-</nav>
+  </nav>
 
-<main class="max-w-4xl mx-auto px-6 pt-32 pb-12">
-  <div class="space-y-8">
-    <div class="glass-card p-6 sm:p-8 rounded-[40px] step active" id="step1">
-      <h2 class="text-2xl sm:text-3xl font-bold mb-8">Step 1: Solute Details</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div>
-          <label class="block text-sm font-mono uppercase tracking-wider text-zinc-500 mb-2">Solute Name</label>
-          <input id="soluteName" type="text" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 hover-scale focus:outline-none focus:border-black">
-        </div>
-        <div>
-          <label class="block text-sm font-mono uppercase tracking-wider text-zinc-500 mb-2">M₂ (g/mol)</label>
-          <input id="M2" type="number" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 hover-scale focus:outline-none focus:border-black">
-        </div>
-        <div>
-          <label class="block text-sm font-mono uppercase tracking-wider text-zinc-500 mb-2">W₂ (g)</label>
-          <input id="W2" type="number" class="w-full p-3 border border-black/20 rounded-lg bg-white/50 hover-scale focus:outline-none focus:border-black">
-        </div>
+  <main>
+    <!-- Hero -->
+    <section class="text-center py-24 space-y-6">
+      <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-black to-zinc-800 bg-clip-text text-transparent tracking-tight">
+        LABS
+      </h1>
+      <p class="text-xl md:text-2xl text-zinc-600 max-w-2xl mx-auto leading-relaxed">
+        Experimental projects, calculators, and interactive tools built during M.Sc Chemistry research.
+      </p>
+    </section>
+
+    <!-- Labs Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-24">
+      <div class="glass-card p-8 rounded-[40px] hover-scale group">
+        <h3 class="text-2xl font-bold mb-4 group-hover:text-red-500 transition-colors font-mono uppercase tracking-wider">Heat of Solution</h3>
+        <p class="text-zinc-600 mb-6 text-sm leading-relaxed">Interactive calculator for determining heat of solution in chemistry experiments.</p>
+        <a href="labs/2254.html" class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-sm font-mono hover:bg-zinc-800 btn-hover transition-all">
+          Launch Lab →
+        </a>
       </div>
-      <button onclick="saveStep1()" class="w-full sm:w-auto bg-black text-white px-8 py-4 rounded-full font-mono text-lg hover-scale btn-hover">Save & Next →</button>
-    </div>
-
-    <div class="glass-card p-6 sm:p-8 rounded-[40px] step" id="step2">
-      <h2 class="text-2xl sm:text-3xl font-bold mb-8">Step 2: Experimental Data</h2>
-      <div class="overflow-x-auto">
-        <table class="w-full text-left min-w-[300px]">
-          <thead><tr><th class="pb-4">W₁ (g)</th><th class="pb-4">Saturation (°C)</th></tr></thead>
-          <tbody id="dataTable">
-            </tbody>
-        </table>
+      <div class="glass-card p-8 rounded-[40px] hover-scale">
+        <h3 class="text-2xl font-bold mb-4 font-mono uppercase tracking-wider text-zinc-400">Coming Soon</h3>
+        <p class="text-zinc-500 mb-6 text-sm">UV-Vis Spectroscopy Simulator</p>
+        <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">WIP</div>
       </div>
-      <div class="flex flex-col sm:flex-row gap-4 mt-8">
-        <button onclick="calculate()" class="bg-black text-white px-8 py-4 rounded-full font-mono hover-scale btn-hover flex-1 order-1 sm:order-2">Calculate →</button>
-        <button onclick="showStep(1)" class="border border-black px-8 py-4 rounded-full font-mono hover-scale btn-hover order-2 sm:order-1">← Back</button>
+      <div class="glass-card p-8 rounded-[40px] hover-scale">
+        <h3 class="text-2xl font-bold mb-4 font-mono uppercase tracking-wider text-zinc-400">Coming Soon</h3>
+        <p class="text-zinc-500 mb-6 text-sm">Nanoparticle Synthesis Tool</p>
+        <div class="text-xs font-mono text-zinc-400 uppercase tracking-wider">WIP</div>
       </div>
-    </div>
+    </section>
 
-    <div class="glass-card p-6 sm:p-8 rounded-[40px] step" id="step3">
-      <h2 class="text-2xl sm:text-3xl font-bold mb-8">Step 3: Results & Calculations</h2>
-      <div class="overflow-x-auto">
-        <table id="resultTable" class="glass-card w-full mb-8 rounded-2xl overflow-hidden shadow-2xl border border-black/10 min-w-[600px]">
-          <thead class="bg-black/5">
-            <tr class="text-left uppercase text-xs tracking-wider text-zinc-600 font-mono">
-              <th class="p-4 font-bold">W₁ (g)</th>
-              <th class="p-4 font-bold">°C</th>
-              <th class="p-4 font-bold">T (K)</th>
-              <th class="p-4 font-bold">N₂</th>
-              <th class="p-4 font-bold">log N₂</th>
-              <th class="p-4 font-bold">log N₂+2</th>
-              <th class="p-4 font-bold">1000/T</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-black/10"></tbody>
-        </table>
-      </div>
-      
-      <h3 class="text-xl sm:text-2xl font-bold mb-4">Back Calculation</h3>
-      <pre id="backCalc" class="glass-card p-4 sm:p-6 rounded-2xl mb-8 font-mono text-xs sm:text-sm overflow-auto max-h-64"></pre>
-      
-      <div class="relative w-full h-72 sm:h-96 mb-8 rounded-[20px] bg-white/50 p-2 sm:p-4 border border-black/10">
-        <canvas id="chart"></canvas>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table id="summaryTable" class="glass-card w-full rounded-2xl overflow-hidden shadow-2xl border border-black/10 mb-8 min-w-[300px]">
-          <thead class="bg-black/5">
-            <tr class="uppercase text-xs tracking-wider text-zinc-600 font-mono">
-              <th class="p-4 font-bold text-left">Parameter</th>
-              <th class="p-4 font-bold text-right">Value</th>
-            </tr>
-          </thead>
-          <tbody id="summaryBody" class="divide-y divide-black/10"></tbody>
-        </table>
-      </div>
-      
-      <p id="slopeResult" class="text-xl sm:text-2xl font-bold text-center mb-8 break-words"></p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button onclick="window.print()" class="bg-black text-white px-8 py-4 rounded-full font-mono hover-scale btn-hover">🖨️ Print Report</button>
-        <button onclick="showStep(2)" class="border border-black px-8 py-4 rounded-full font-mono hover-scale btn-hover">← Edit Data</button>
-      </div>
-    </div>
-  </div>
-</main>
-
-<footer class="glass-card mt-12 sm:mt-24 p-6 sm:p-8 text-center rounded-[40px] mx-6 mb-12">
-  <p class="font-mono text-xs sm:text-sm uppercase tracking-wider text-zinc-500">Heat of Solution Calculator | Venkatesh Workspace | M.Sc Chemistry Lab</p>
-</footer>
-
-<script>
-// ==========================================
-// 1. AUTHENTICATION & MODAL LOGIC
-// ==========================================
-
-// Your Google Apps Script Web App URL
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzLVW9cJ5TD-Zdq2iE1DHFJpb1dGfawFE0MB93rx8CZOwLSYGSAt0YOC2pfqb-QT4Lz/exec"; 
-
-let currentAuthMode = 'login'; // 'login' or 'register'
-
-function showLogin() { 
-  document.getElementById('loginModal').classList.remove('hidden'); 
-  document.querySelector('main').style.display = 'none';
-}
-
-function closeLogin() { 
-  document.getElementById('loginModal').classList.add('hidden'); 
-  document.querySelector('main').style.display = 'block';
-}
-
-function logout() {
-  localStorage.removeItem('authToken');
-  showLogin();
-  showToast('Logged out successfully');
-}
-
-function switchTab(mode) {
-  currentAuthMode = mode;
-  const regFields = document.getElementById('registerFields');
-  const btn = document.getElementById('authSubmitBtn');
-  const tabLogin = document.getElementById('tabLogin');
-  const tabReg = document.getElementById('tabRegister');
-
-  if (mode === 'register') {
-    regFields.classList.remove('hidden');
-    btn.innerHTML = 'Register →';
-    tabReg.classList.remove('text-black/30');
-    tabLogin.classList.add('text-black/30');
-  } else {
-    regFields.classList.add('hidden');
-    btn.innerHTML = 'Login →';
-    tabLogin.classList.remove('text-black/30');
-    tabReg.classList.add('text-black/30');
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Safe DOM row generation for Step 2
-  const dataTable = document.getElementById('dataTable');
-  let rowsHtml = '';
-  for(let i=1; i<=10; i++){
-    rowsHtml += `<tr><td class="pr-1 sm:pr-2 pb-2"><input id="W1_${i}" type="number" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black"></td><td class="pl-1 sm:pl-2 pb-2"><input id="SP_${i}" type="number" class="w-full p-2 sm:p-3 border border-black/20 rounded-lg bg-white/50 focus:outline-none focus:border-black"></td></tr>`;
-  }
-  dataTable.innerHTML = rowsHtml;
-
-  // Check auth token (keep user logged in for 24h)
-  if (localStorage.getItem('authToken') && Date.now() - parseInt(localStorage.getItem('authToken')) < 24*60*60*1000) {
-    document.querySelector('main').style.display = 'block';
-    return;
-  }
-  showLogin();
-});
-
-document.getElementById('authForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  
-  const email = document.getElementById('authEmail').value;
-  const password = document.getElementById('authPassword').value;
-  const btn = document.getElementById('authSubmitBtn');
-
-  // Validate Email
-  const emailRegex = /^[^\s@]+@(gmail\.com|outlook\.com|edu\.elcot\.in)$/i;
-  if (!emailRegex.test(email)) {
-    return showToast('Error: Use @gmail, @outlook, or @edu.elcot.in');
-  }
-
-  // Validate Password (8+ chars, upper, lower, number, special)
-  const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (!passRegex.test(password)) {
-    return showToast('Password must be 8+ chars with Upper, Lower, Number & Special char.');
-  }
-
-  // Prepare Payload
-  let payload = { action: currentAuthMode, email: email, password: password };
-  if (currentAuthMode === 'register') {
-    payload.name = document.getElementById('regName').value;
-    payload.institute = document.getElementById('regInst').value;
-    if (!payload.name || !payload.institute) return showToast('Please fill all fields');
-  }
-
-  // Send to GAS Backend
-  btn.innerHTML = 'Processing...';
-  btn.disabled = true;
-
-  try {
-    const response = await fetch(GAS_URL, {
-      method: 'POST',
-      redirect: 'follow', // Important for Google Apps Script
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8", // Bypasses CORS Preflight
-      },
-      body: JSON.stringify(payload)
-    });
-    
-    const result = await response.json();
-
-    if (result.success) {
-      showToast(result.message);
-      if (currentAuthMode === 'login') {
-        localStorage.setItem('authToken', Date.now().toString());
-        closeLogin();
-      } else {
-        switchTab('login'); // Switch to login after registration
-      }
-    } else {
-      showToast('Error: ' + result.message);
-    }
-  } catch (error) {
-    console.error(error);
-    showToast('Network error connecting to database.');
-  } finally {
-    btn.innerHTML = currentAuthMode === 'login' ? 'Login →' : 'Register →';
-    btn.disabled = false;
-  }
-});
-
-// ==========================================
-// 2. CALCULATOR LOGIC
-// ==========================================
-
-const M1 = 18; // Molar mass of water
-let chart;
-
-function showStep(n) {
-  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  document.getElementById(`step${n}`).classList.add('active');
-}
-
-function saveStep1() {
-  localStorage.setItem('soluteName', document.getElementById('soluteName').value);
-  localStorage.setItem('M2', document.getElementById('M2').value);
-  localStorage.setItem('W2', document.getElementById('W2').value);
-  showStep(2);
-}
-
-function calculate() {
-  const W2v = Number(document.getElementById('W2').value);
-  const M2v = Number(document.getElementById('M2').value);
-  
-  // Validation
-  if (!W2v || !M2v || M2v === 0) {
-    showToast("Error: Please enter valid M₂ and W₂ values in Step 1.");
-    return;
-  }
-
-  const table = document.getElementById('resultTable');
-  const back = document.getElementById('backCalc');
-  const tbody = table.querySelector('tbody');
-  tbody.innerHTML = '';
-
-  let X = [], Y = []; let backText = '';
-
-  for(let i = 1; i <= 10; i++) {
-    let W1 = Number(document.getElementById(`W1_${i}`).value);
-    let SP = Number(document.getElementById(`SP_${i}`).value);
-    if(W1 <= 0 || SP <= 0) continue;
-
-    let T = SP + 273.15; // Kelvin conversion
-    let n2 = W2v / M2v;
-    let n1 = W1 / M1;
-    let N2 = n2 / (n1 + n2);
-    let logN2 = Math.log10(N2);
-    let logN2p2 = logN2 + 2;
-    let invT = 1000 / T;
-
-    X.push(invT); Y.push(logN2p2);
-
-    tbody.innerHTML += `
-      <tr class="hover:bg-black/5 transition-colors">
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${W1}</td>
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${SP}</td>
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${T.toFixed(2)}</td>
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${N2.toFixed(4)}</td>
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${logN2.toFixed(4)}</td>
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${logN2p2.toFixed(4)}</td>
-        <td class="p-2 sm:p-4 text-xs sm:text-base">${invT.toFixed(4)}</td>
-      </tr>`;
-
-    backText += `W₁=${W1}, SP=${SP}\nn₂=${n2.toFixed(4)}\nn₁=${n1.toFixed(4)}\nN₂=${N2.toFixed(4)}\nlogN₂=${logN2.toFixed(4)}\n1000/T=${invT.toFixed(4)}\n───────────────────\n`;
-  }
-
-  back.textContent = backText;
-  drawChart(X, Y);
-  slopeCalc(X, Y);
-  showStep(3);
-}
-
-// Chart Rendering logic
-function drawChart(X, Y) {
-  const ctx = document.getElementById('chart').getContext('2d');
-  if(chart) chart.destroy();
-
-  // Sort data points left to right so the line draws cleanly
-  let plotData = X.map((x, i) => ({ x: x, y: Y[i] }));
-  plotData.sort((a, b) => a.x - b.x);
-
-  chart = new Chart(ctx, {
-    type: 'scatter',
-    data: { 
-      datasets: [{ 
-        label: 'log N₂ + 2 vs 1000/T', 
-        data: plotData, 
-        showLine: true, 
-        borderColor: 'black', 
-        backgroundColor: 'black',
-        borderWidth: 2,
-        tension: 0 // Keep line straight
-      }] 
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false, 
-      scales: {
-        x: { 
-          type: 'linear', 
-          position: 'bottom',
-          title: { display: true, text: '1000/T (K⁻¹)', font: { family: 'JetBrains Mono' } } 
-        },
-        y: { 
-          title: { display: true, text: 'log N₂ + 2', font: { family: 'JetBrains Mono' } } 
-        }
-      }
-    }
-  });
-}
-
-function slopeCalc(X, Y) {
-  let n = X.length, sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
-  for(let i = 0; i < n; i++) {
-    sumX += X[i]; sumY += Y[i]; sumXY += X[i]*Y[i]; sumX2 += X[i]*X[i];
-  }
-  const R = 1.987; // cal/mol·K
-  let m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-  const deltaH = -2.303 * R * m;
-  
-  document.getElementById('slopeResult').innerHTML = `<b>Slope (m) = ${m.toFixed(5)}</b>`;
-  
-  const summaryBody = document.getElementById('summaryBody');
-  const soluteName = document.getElementById('soluteName').value || 'Unknown';
-  summaryBody.innerHTML = `
-    <tr><td class="p-3 sm:p-4 font-mono text-xs sm:text-base">Slope (m)</td><td class="p-3 sm:p-4 text-right font-bold text-xs sm:text-base">${m.toFixed(5)}</td></tr>
-    <tr><td class="p-3 sm:p-4 font-mono text-xs sm:text-base">ΔH (cal/mol)</td><td class="p-3 sm:p-4 text-right font-bold text-blue-600 text-xs sm:text-base">${deltaH.toFixed(2)}</td></tr>
-    <tr><td class="p-3 sm:p-4 font-mono text-xs sm:text-base">Solute</td><td class="p-3 sm:p-4 text-right text-xs sm:text-base">${soluteName}</td></tr>
-    <tr><td class="p-3 sm:p-4 font-mono text-xs sm:text-base">Data Points</td><td class="p-3 sm:p-4 text-right text-xs sm:text-base">${n}</td></tr>
-    <tr><td class="p-3 sm:p-4 font-mono text-xs sm:text-base">R constant</td><td class="p-3 sm:p-4 text-right text-xs sm:text-base">${R} cal/mol·K</td></tr>
-  `;
-}
-
-// ==========================================
-// 3. UI & UX FEATURES
-// ==========================================
-
-const cursor = document.getElementById('custom-cursor');
-let isPointer = false;
-
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-  const target = e.target;
-  const computedStyle = window.getComputedStyle(target);
-  isPointer = computedStyle.cursor === 'pointer' || target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('button') || target.closest('a');
-  
-  cursor.innerHTML = isPointer ?
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10 2L3 19L10 16L17 19L10 2Z" fill="#EF4444" stroke="white" stroke-width="1.5" transform="rotate(-15 10 10)"/></svg>' :
-    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5.5 3.21V20.8L10.07 15.65H18.5L5.5 3.21Z" fill="#EF4444" stroke="white" stroke-width="1.5"/></svg>';
-  cursor.style.width = isPointer ? '24px' : '20px';
-  cursor.style.height = isPointer ? '24px' : '20px';
-});
-
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('navbar-scrolled', window.scrollY > 20);
-});
-
-function showToast(message) {
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = message;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.classList.add('show'), 100);
-  setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
-}
-
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J'))) {
-    e.preventDefault(); showToast('DevTools disabled');
-  }
-  if (e.ctrlKey && (e.key === 'u' || e.key === 's')) { e.preventDefault(); showToast('Protected'); }
-}, true);
-</script>
+    <!-- Footer -->
+    <footer class="py-12 border-t border-black/5 text-center">
+      <p class="font-mono text-xs uppercase tracking-wider text-zinc-400">
+        Labs by Venkatesh Kumar | © 2026 | Experimental Workspace
+      </p>
+    </footer>
+  </main>
 </body>
 </html>
