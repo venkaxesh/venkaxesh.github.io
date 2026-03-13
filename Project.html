@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Silver Nanoparticles Project - Green Synthesis for Biological Applications by Venkatesh Kumar (venkaxesh). UV-Vis Spectroscopy, Characterization, and Research Details." />
+  <meta name="keywords" content="Silver Nanoparticles, AgNPs, Green Synthesis, UV-Vis Spectroscopy, M.Sc Chemistry Project, venkaxesh" />
+  
+  <!-- OG/Twitter metas -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ais-dev-vgiriuabpf6jhdgiqplbhb-264640036918.asia-southeast1.run.app/Project.html" />
+  <meta property="og:title" content="Silver Nanoparticles Project | venkaxesh" />
+  <meta property="og:description" content="Green Synthesis of Silver Nanoparticles (AgNPs) for Biological Applications - Full Research Details." />
+  <meta property="og:image" content="Assets/img/img1.jpeg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ais-dev-vgiriuabpf6jhdgiqplbhb-264640036918.asia-southeast1.run.app/Project.html" />
+  <meta property="twitter:title" content="Silver Nanoparticles Project | venkaxesh" />
+  <meta property="twitter:description" content="Green Synthesis of Silver Nanoparticles (AgNPs) for Biological Applications - Full Research Details." />
+  <meta property="twitter:image" content="Assets/img/img1.jpeg" />
+  
+  <title>Silver Nanoparticles Project - venkaxesh</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --dot-color: #d1d1d1;
+      --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #000;
+      font-family: var(--font-sans);
+      cursor: none;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a, button {
+      cursor: none;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .dot-matrix {
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 10px;
+    }
+
+    /* Fade/scale keyframes -->
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(1.1); }
+      to { opacitproject : 1; transform: scale(1); }
+    }
+    @keyframes fadeOutScale {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.95); }
+    }
+
+    .fade-in-scale {
+      animation: fadeInScale 1s ease-in-out;
+    }
+
+    /* Toast notifications */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      z-index: 10000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.hide {
+      transform: translateX(400px);
+    }
+
+    /* Hover effects */
+    .hover-scale {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hover-scale:hover {
+      transform: scale(1.02) translateY(-5px);
+    }
+    .btn-hover {
+      transition: all 0.2s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(0.95);
+    }
+
+    /* Navbar scroll */
+    .navbar-scrolled {
+      width: 90% !important;
+    }
+
+    /* Security Protections */
+    img, video {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .navbar-scrolled {
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" class="fixed top-0 left-0 pointer-events-none z-[9999] w-[20px] h-[20px]"></div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-[95vw] md:w-auto">
+    <div class="glass-card rounded-full px-6 py-3 flex items-center justify-between gap-8 shadow-2xl border border-white/20">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+          <span class="text-white font-mono text-xs">VK</span>
+        </div>
+        <span class="font-mono text-sm hidden sm:block tracking-tighter uppercase">Venkatesh.Kumar</span>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html#home" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Home</a>
+        <a href="index.html#connect" class="text-xs font-mono uppercase tracking-widest hover:text-red-500 transition-colors nav-link">Connect</a>
+        <a href="index.html#hire" class="text-xs font-mono uppercase tracking-widest text-red-500 nav-link">Project</a>
+      </div>
+
+      <a href="Assets/resume.pdf" download="Venkatesh_Kumar_Resume.pdf" class="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-full text-xs font-mono hover:bg-zinc-800 transition-all btn-hover">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> RESUME
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-6 pt-32 pb-12">
+    <!-- Hero Section with Single Image -->
+    <section id="project-hero" class="mb-24">
+      <div class="relative w-full h-[500px] md:h-[600px] rounded-[40px] overflow-hidden">
+        <img src="https://i.pinimg.com/originals/b9/42/f8/b942f8fc01ec28524279963aea7fa893.gif" alt="Silver Nanoparticles Hero" class="w-full h-full object-cover absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        
+        <!-- Hero Text -->
+        <div class="absolute bottom-12 left-12 right-12 flex flex-col md:flex-row md:items-end justify-between gap-6 z-[10]">
+          <div class="p-6 max-w-xl bg-transparent text-shadow fade-in-scale">
+            <div class="inline-block px-3 py-1 bg-red-500 text-white text-[10px] font-mono rounded-full mb-4">
+              M.SC CHEMISTRY RESEARCH
+            </div>
+<h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight leading-[0.9] drop-shadow-2xl">
+              S. WIGHTII SILVER <br> NANOPARTICLES <br>
+              <span class="text-zinc-400 italic">Research Details.</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Details Sections -->
+    <section class="space-y-24">
+      <!-- Introduction -->
+      <section class="glass-card p-8 md:p-16 rounded-[40px]">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">1. Introduction</h2>
+<p class="text-xl text-zinc-600 mb-12 leading-relaxed max-w-4xl">
+          Nanotechnology has become an important field in modern science due to its wide applications in medicine, environmental science, and material science. Silver nanoparticles (AgNPs) are particularly significant because of their strong antimicrobial, catalytic, and optical properties. Recently, green synthesis methods using plant extracts have gained attention as an eco-friendly, cost-effective, and non-toxic alternative to chemical synthesis methods. Plant extracts contain bioactive compounds such as flavonoids, phenols, alkaloids, and proteins which act as reducing and stabilizing agents during nanoparticle formation. In this study, silver nanoparticles were synthesized using the aqueous extract of S. wightii. The formation of AgNPs was confirmed using UV–Visible spectroscopy, Scanning Electron Microscopy (SEM), and Fourier Transform Infrared Spectroscopy (FT-IR). The synthesized nanoparticles were also evaluated for their antibacterial activity.
+        </p>
+        <img src="Assets/img/intro.png" alt="Synthesis Process" class="w-full max-w-2xl mx-auto rounded-[20px] shadow-2xl hover-scale">
+      </section>
+
+      <!-- Synthesis Process -->
+      <section class="glass-card p-8 md:p-16 rounded-[40px]">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">2. Synthesis Process</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <ol class="space-y-4 text-lg leading-relaxed">
+              <li>Fresh leaves of S. wightii collected, washed with tap water (2-3 times) and double distilled water (1-3 times), then dried.</li>
+              <li>0.5g dried material + 100ml distilled water, microwave heated 15-20 min (reduced to 60-80ml), filtered (Whatman No.1).</li>
+              <li>Diluted 1:10 (10ml extract + 90ml water). Added 2ml 0.1N AgNO₃ to 25ml extract, microwave incubated.</li>
+              <li>Color change: clear → yellow → brown (24h), indicating AgNP formation.</li>
+            </ol>
+          </div>
+          <img src="Assets/img/syn.png" alt="Synthesis Process" class="w-full rounded-[20px] shadow-2xl hover-scale">
+        </div>
+      </section>
+
+      <!-- Characterization -->
+      <section class="glass-card p-8 md:p-16 rounded-[40px]">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">3. UV–Visible Spectroscopy Characterization</h2>
+        <p class="text-xl text-zinc-600 mb-12 leading-relaxed">
+          The formation of silver nanoparticles was confirmed using UV–Visible spectroscopy. The absorption spectrum showed a characteristic peak at 455 nm, which corresponds to the surface plasmon resonance (SPR) of silver nanoparticles. This peak confirms the reduction of Ag⁺ ions to Ag⁰ nanoparticles by phytochemicals present in the S. wightii extract.
+        </p>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <img src="Assets/img/uv.jpeg" alt="UV-Vis Spectrum" class="w-full rounded-[20px] shadow-2xl hover-scale">
+          <video src="Assets/img/uv1.mp4" muted autoplay loop playsinline controls class="w-full rounded-[20px] shadow-2xl hover-scale" style="aspect-ratio: 16/9; height: auto;"></video>
+          <div class="space-y-6 lg:pt-16">
+            <div class="glass-card p-6 rounded-2xl">
+              <h4 class="font-bold text-xl mb-2">Key Results</h4>
+              <ul class="text-lg space-y-2">
+                <li>Peak: 455 nm</li>
+                <li>Size: 20-50 nm</li>
+                <li>Stability: High</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEM Characterization (New) -->
+      <section class="glass-card p-8 md:p-16 rounded-[40px]">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">SEM Characterization</h2>
+        <p class="text-xl text-zinc-600 mb-12 leading-relaxed">
+          Scanning Electron Microscopy (SEM) analysis determined the morphology and size. SEM images revealed predominantly spherical nanoparticles with uniform distribution and slight aggregation due to drying interactions. Analysis confirmed successful nanoscale silver particle formation.
+        </p>
+        <img src="Assets/img/sem.png" alt="SEM Images" class="w-full max-w-2xl mx-auto rounded-[20px] shadow-2xl hover-scale">
+      </section>
+
+      <!-- FT-IR Characterization (New) -->
+      <section class="glass-card p-8 md:p-16 rounded-[40px]">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">FT-IR Characterization</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <div>
+            <p class="text-xl text-zinc-600 mb-8 leading-relaxed">
+              FT-IR identified functional groups responsible for reduction/stabilization. Bioactive compounds (phenolics, proteins, flavonoids) from plant extract reduced silver ions.
+            </p>
+            <ul class="space-y-3 text-lg">
+              <li>O–H stretching: alcohols, phenols</li>
+              <li>C=O stretching: carbonyl compounds</li>
+              <li>C–N stretching: amines</li>
+              <li>C–O stretching: alcohols, esters</li>
+            </ul>
+          </div>
+          <img src="Assets/img/ftir.png" alt="FT-IR Spectrum" class="w-full rounded-[20px] shadow-2xl hover-scale">
+        </div>
+      </section>
+
+      <!-- Antibacterial Activity -->
+      <section class="glass-card p-8 md:p-16 rounded-[40px]">
+        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Biological Application (Antibacterial Activity)</h2>
+        <p class="text-xl text-zinc-600 mb-12 leading-relaxed">
+          Silver nanoparticles from S. wightii exhibit strong antibacterial activity against pathogenic bacteria. Mechanisms:
+        </p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-lg mb-12">
+          <li>• Disruption of bacterial cell membranes</li>
+          <li>• Generation of reactive oxygen species (ROS)</li>
+          <li>• Interaction with bacterial DNA and proteins</li>
+        </ul>
+        <p class="text-xl text-zinc-600 mb-8 leading-relaxed max-w-4xl mx-auto">
+          Applications: medical coatings, wound dressings, antimicrobial agents, pharmaceuticals.
+        </p>
+        <img src="Assets/img/antiba.webp" alt="Antibacterial Activity" class="w-full max-w-3xl mx-auto rounded-[20px] shadow-2xl hover-scale">
+      </section>
+    </section>
+
+    <!-- Back to Home & Contact Buttons -->
+    <section class="py-24 text-center">
+      <div class="max-w-md mx-auto space-y-6">
+        <a href="index.html" class="inline-flex items-center gap-3 bg-black text-white px-8 py-5 rounded-full font-mono text-lg hover:bg-zinc-800 transition-all btn-hover w-full justify-center">
+          ← BACK TO HOME
+        </a>
+        <a href="mailto:venkaxesh@gmail.com?subject=AgNPs Research Discussion" class="inline-block border border-black px-8 py-5 rounded-full font-mono text-lg hover:bg-black hover:text-white transition-all btn-hover">
+          DISCUSS RESEARCH
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-black/5">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+            <span class="text-white font-mono text-sm">VK</span>
+          </div>
+          <div>
+            <p class="font-mono text-xs font-bold uppercase tracking-widest">Venkatesh Kumar M K</p>
+            <p class="text-[10px] text-zinc-400 font-mono">© 2026 | MADURAI, TAMIL NADU</p>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row gap-6 text-[10px] font-mono text-zinc-400">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            RESEARCHER ACTIVE
+          </div>
+          <div class="flex gap-4 opacity-50">
+            <span>M.SC CHEMISTRY</span>
+            <span>UV-VIS: CALIBRATED</span>
+            <span>LATEX: READY</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Background Blurs -->
+  <div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-red-500/5 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-zinc-500/5 blur-[120px] rounded-full"></div>
+  </div>
+
+  <script>
+    // Simplified cursor without slider
+    const cursor = document.getElementById('custom-cursor');
+    let isPointer = false;
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+
+      const target = e.target;
+      const computedStyle = window.getComputedStyle(target);
+      isPointer = computedStyle.cursor === 'pointer' || target.tagName === 'A' || target.tagName === 'BUTTON';
+      updateCursor();
+    });
+
+    function updateCursor() {
+      if (isPointer) {
+        cursor.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10 2L3 19L10 16L17 19L10 2Z" fill="#EF4444" stroke="white" stroke-width="1.5" transform="rotate(-15 10 10)"/></svg>';
+        cursor.style.width = '24px';
+        cursor.style.height = '24px';
+      } else {
+        cursor.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5.5 3.21V20.8L10.07 15.65H18.5L5.5 3.21Z" fill="#EF4444" stroke="white" stroke-width="1.5"/></svg>';
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+      }
+    }
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+    });
+
+    // Toast function
+    function showToast(message, duration = 3000) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
+    }
+
+    // External link handling
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('a');
+      if (target && target.href?.includes('resume.pdf')) {
+        showToast('Downloading resume...');
+      }
+    });
+
+    // Security JS Protections
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      // Block devtools keys
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J'))) {
+        e.preventDefault();
+        showToast('DevTools disabled');
+        return false;
+      }
+      // Block view source/save
+      if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p')) {
+        e.preventDefault();
+        showToast('Content protected');
+        return false;
+      }
+      // Block PrtScn
+      if (e.key === 'PrintScreen') {
+        showToast('Screenshots disabled');
+        navigator.clipboard.writeText('').catch(() => {});
+        return false;
+      }
+      // Block text select
+      if (e.ctrlKey && e.key === 'a') {
+        e.preventDefault();
+        showToast('Select disabled');
+      }
+    }, true);
+
+    // Disable devtools detection (basic)
+    let devtoolsOpen = false;
+    const threshold = 160;
+    setInterval(() => {
+      if ((window.outerHeight - window.innerHeight > threshold) || (window.outerWidth - window.innerWidth > threshold)) {
+        if (!devtoolsOpen) {
+          devtoolsOpen = true;
+          showToast('DevTools detected - page will reload');
+          setTimeout(() => window.location.reload(), 2000);
+        }
+      }
+    }, 500);
+
+    // Init cursor
+    window.addEventListener('load', () => {
+      updateCursor();
+    });
+  </script>
+</body>
+</html>
